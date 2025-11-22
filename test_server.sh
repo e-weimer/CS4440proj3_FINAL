@@ -4,8 +4,8 @@ set -euo pipefail
 PORT=5555
 
 echo "Compiling server and client..."
-gcc -Wall -Wextra -pthread -o server server_v2.c
-gcc -Wall -Wextra -o client client_v2.c
+gcc -Wall -Wextra -pthread -o server server.c
+gcc -Wall -Wextra -o client client.c
 
 echo
 echo "========== SERVER NEGATIVE TESTS =========="
