@@ -1,11 +1,7 @@
-/*
- * Simple multi-threaded TCP server.
- *
- * - Listens on a specified port for incoming client connections.
- * - For each connection, spawns a detached thread to handle the request.
- * - Each thread receives a line of text, strips the trailing newline,
- *   reverses the characters, appends a newline, and sends it back.
- */
+/* This program implements a TCP server that listens on a specified port for incoming connections.
+It accepts the connection and makes a new thread to handle the client server.
+The string it gets from tthe client the server reveres and returns to the client.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
