@@ -94,21 +94,21 @@ int main(int argc, char **argv) {
     char in[BUF];
     ssize_t r = recv(s, in, sizeof(in) - 1, 0);
 
-    // Check the result of recv to see if data was received,
+    // check the result of recv to see if data was received,
     // the connection was closed, or an error occurred
     if (r > 0) {
-        // Normal case: we got some bytes back from the server.
+        // normal case: we got some bytes back from the server
         in[r] = '\0';
         printf("%s", in);
         close(s);
         return 0;
     } else if (r == 0) {
-        // The server closed the connection cleanly without sending any data.
+        // the server closed the connection cleanly without sending any data
         fprintf(stderr, "Server closed connection\n");
         close(s);
         return 1;
     } else {
-        // A real error occurred during recv(); print the error and return non-zero.
+        // a real error occurred during recv(); print the error and return non-zero
         perror("recv");
         close(s);
         return 1;
