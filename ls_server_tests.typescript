@@ -1,0 +1,207 @@
+Script started on 2025-11-22 06:45:55+00:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="80" LINES="24"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_ls_server.sh^[[200~script ls_server_tests.typescript[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[21P./test_ls_server.sh
+[?2004lCompiling ls_server and ls_client...
+
+========== LS SERVER NEGATIVE TESTS ==========
+
+1) Missing port argument (should print usage and exit non-zero):
+Usage: ./ls_server <port>
+-- OK: ls_server failed as expected
+
+2) Invalid port 0 (should print error and exit non-zero):
+Invalid port
+-- OK: ls_server rejected invalid port 0
+
+3) Invalid port -1 (should print error and exit non-zero):
+Invalid port
+-- OK: ls_server rejected invalid port -1
+
+========== LS SERVER FUNCTIONAL TESTS ==========
+
+Starting ls_server on port 5560 in background...
+bind: Address already in use
+
+4) Simple directory listing ('.'):
+client
+client_tests.typescript
+client_v2.c
+ls_client
+ls_client_tests.typescript
+ls_client_v2.c
+ls_server
+ls_server.c
+ls_server_tests.typescript
+Makefile
+server
+server_tests.typescript
+server_v2.c
+test_client.sh
+test_ls_client.sh
+test_ls_server.sh
+test_server.sh
+
+5) Long listing with options ('-l .'):
+total 116
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed     0 Nov 22 06:45 ls_server_tests.typescript
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+
+6) Listing multiple paths ('. .. /tmp'):
+.:
+client
+client_tests.typescript
+client_v2.c
+ls_client
+ls_client_tests.typescript
+ls_client_v2.c
+ls_server
+ls_server.c
+ls_server_tests.typescript
+Makefile
+server
+server_tests.typescript
+server_v2.c
+test_client.sh
+test_ls_client.sh
+test_ls_server.sh
+test_server.sh
+
+..:
+client.c
+edited
+ls_client.c
+ls_server.c
+Makefile
+server.c
+
+/tmp:
+snap-private-tmp
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-colord.service-0Bw0TC
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-ModemManager.service-9PobBA
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-power-profiles-daemon.service-HPFDlW
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-switcheroo-control.service-5BBqxF
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-systemd-logind.service-XKmUFG
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-systemd-oomd.service-gytW4Z
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-systemd-resolved.service-j59X6b
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-systemd-timesyncd.service-W6EZ46
+systemd-private-5b599c5e08614c6298bea0bc7426b2e9-upower.service-slPoX2
+VMwareDnD
+vmware-root_886-2697008560
+
+7) Invalid ls option (should show error text coming from server):
+ls: unrecognized option '--this-option-does-not-exist'
+Try 'ls --help' for more information.
+
+8) Concurrent clients (fork handling and robustness):
+total 116
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed     0 Nov 22 06:45 ls_server_tests.typescript
+total 116
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed     0 Nov 22 06:45 ls_server_tests.typescript
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+total 120
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed  4096 Nov 22 06:46 ls_server_tests.typescript
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+total 120
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed  4096 Nov 22 06:46 ls_server_tests.typescript
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+total 120
+-rwxrwxr-x 1 seed seed 13688 Nov 22 06:21 client
+-rw-rw-r-- 1 seed seed  2558 Nov 22 02:22 client_tests.typescript
+-rw-rw-r-- 1 seed seed  3355 Nov 22 01:14 client_v2.c
+-rwxrwxr-x 1 seed seed 13712 Nov 22 06:46 ls_client
+-rw-rw-r-- 1 seed seed  3667 Nov 22 06:39 ls_client_tests.typescript
+-rw-rw-r-- 1 seed seed  3530 Nov 22 06:08 ls_client_v2.c
+-rwxrwxr-x 1 seed seed 14056 Nov 22 06:46 ls_server
+-rw-rw-r-- 1 seed seed  4006 Nov 22 03:13 ls_server.c
+-rw-rw-r-- 1 seed seed  4096 Nov 22 06:46 ls_server_tests.typescript
+-rw-rw-r-- 1 seed seed  1097 Nov 22 06:17 Makefile
+-rwxrwxr-x 1 seed seed 14312 Nov 22 06:21 server
+-rw-rw-r-- 1 seed seed  1663 Nov 22 03:04 server_tests.typescript
+-rw-rw-r-- 1 seed seed  5664 Nov 22 01:14 server_v2.c
+-rwxrwxr-x 1 seed seed  1849 Nov 22 02:07 test_client.sh
+-rwxrwxr-x 1 seed seed  1903 Nov 22 06:17 test_ls_client.sh
+-rwxrwxr-x 1 seed seed  1832 Nov 22 06:17 test_ls_server.sh
+-rwxrwxr-x 1 seed seed  1774 Nov 22 02:07 test_server.sh
+
+Stopping ls_server (SIGTERM)...
+
+========== LS SERVER TESTS COMPLETE ==========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 06:46:13+00:00 [COMMAND_EXIT_CODE="0"]
