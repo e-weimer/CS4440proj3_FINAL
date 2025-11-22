@@ -1,0 +1,47 @@
+Script started on 2025-11-22 09:51:49+00:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="26"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_disk_server.sh
+[?2004lCompiling disk_server, disk_cli, and disk_rand...
+
+=========== DISK SERVER NEGATIVE TESTS ===========
+
+1) Missing arguments (should print usage and exit non-zero):
+Usage: ./disk_server <port> <cylinders> <sectors> <track_us> <backing_file>
+-- OK: disk_server failed as expected (missing args)
+
+2) Invalid cylinders = 0 (should print error and exit non-zero):
+cylinders and sectors must both be > 0
+-- OK: disk_server rejected cylinders = 0
+
+3) Invalid sectors = 0 (should print error and exit non-zero):
+cylinders and sectors must both be > 0
+-- OK: disk_server rejected sectors = 0
+
+=========== DISK SERVER FUNCTIONAL TESTS ===========
+
+4) Starting disk_server in background...
+[disk_server] port=5570 geom=10x20 track=1000us file=disk.img
+
+5) Query geometry via disk_cli (I command):
+10 20
+
+6) Simple write and readback (W then R of same block):
+1
+Unknown command type: 
+
+1 4142434400000000000000000000000000000000000000000000000000000000 ...
+
+7) Read from an out-of-range block (R 99 99) – server should return 0:
+0
+
+8) Exercise concurrent access using disk_rand (short run):
+[disk_rand] geometry: 10 cylinders x 20 sectors
+wrwwrrwwrrwwwrwrrrrwrwrwwrrrwwwwrwrwrwrwrrrwrrrrrrwrrwrwwrrwrwww
+
+
+Stopping disk_server (SIGTERM)...
+
+=========== DISK SERVER TESTS COMPLETE ===========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 09:52:00+00:00 [COMMAND_EXIT_CODE="0"]

@@ -1,0 +1,42 @@
+Script started on 2025-11-22 09:53:50+00:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="26"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_disk_cli.sh[1P.sh[1P.sh[1P.sh[1P.sh_.shr.sha.shn.shd.sh
+[?2004lCompiling disk_server and disk_rand...
+
+=========== DISK RAND NEGATIVE TESTS ===========
+
+1) Missing arguments (should print usage and exit non-zero):
+Usage: ./disk_rand <host> <port> <N> <seed>
+-- OK: disk_rand failed as expected (missing args)
+
+2) Invalid N (0) (should print error and exit non-zero):
+Invalid port or N
+-- OK: disk_rand rejected N=0
+
+3) Connection failure (no server listening):
+connect: Connection refused
+-- OK: disk_rand handled connect() failure
+
+=========== DISK RAND FUNCTIONAL TESTS ===========
+
+4) Start disk_server in background...
+[disk_server] port=5572 geom=12x24 track=750us file=disk_rand.img
+
+5) Short random workload (N=32, seed=1234):
+[disk_rand] geometry: 12 cylinders x 24 sectors
+wrwwwrwrrrrrrwwwwwrrrrrwrrwrwrwr
+
+6) Larger random workload (N=256, seed=5678):
+[disk_rand] geometry: 12 cylinders x 24 sectors
+rwrrrwwwrwrwrrrwrwrrwwwwwwwwwwrwrwrrwwrwrrwwwwrrrrrwwrrwwwrwrwwr
+wwrrwwwwrrwrwrwwrwrrwwrwrrrrrwwwwrwwrrwrrrwrwrwrrrwrrrwrrwwwwwrr
+rwrwrwwrrrrrrwrrrwwrwrwwrwrwrrrrrrrrwrwwwwwrrwrwwrrwwrwwwwrwwwrr
+wwrwrrrrrwrwwwrrrrrwrwwwwwwrrwwwrwwrwrwrwrwwwwwwwrrwrrrwrrwrrrrr
+
+
+Stopping disk_server (SIGTERM)...
+
+=========== DISK RAND TESTS COMPLETE ===========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 09:54:16+00:00 [COMMAND_EXIT_CODE="0"]

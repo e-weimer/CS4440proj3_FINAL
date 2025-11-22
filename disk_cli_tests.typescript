@@ -1,0 +1,46 @@
+Script started on 2025-11-22 09:53:21+00:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="26"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_disk_server.shexit[K./test_disk_server.sh[1P.sh[1P.sh[1P.sh[1P.sh[1P.sh[1P.sh[1P.sh_.shc.shl.shi.sh
+[?2004lCompiling disk_server and disk_cli...
+
+=========== DISK CLI NEGATIVE TESTS ===========
+
+1) Missing arguments (should print usage and exit non-zero):
+Usage: ./disk_cli <host> <port>
+-- OK: disk_cli failed as expected (missing args)
+
+2) Invalid port (0) (should print error and exit non-zero):
+Invalid port
+-- OK: disk_cli rejected invalid port 0
+
+3) Connection failure (no server listening):
+connect: Connection refused
+-- OK: disk_cli handled connect() failure
+
+=========== DISK CLI FUNCTIONAL TESTS ===========
+
+4) Start disk_server in background...
+[disk_server] port=5571 geom=8x16 track=500us file=disk_cli.img
+
+5) Geometry + valid read/write commands:
+8 16
+1
+Unknown command type: 
+
+1 48454c4c4f000000000000000000000000000000000000000000000000000000 ...
+
+6) Invalid command format (unknown command 'X') – client should complain but not crash:
+Unknown command type: X
+
+7) Write with small l (partial sector) followed by readback:
+1
+Unknown command type: 
+
+1 78797a0000000000000000000000000000000000000000000000000000000000 ...
+
+Stopping disk_server (SIGTERM)...
+
+=========== DISK CLI TESTS COMPLETE ===========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 09:53:36+00:00 [COMMAND_EXIT_CODE="0"]
