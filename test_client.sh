@@ -4,8 +4,8 @@ set -euo pipefail
 PORT=5556    # separate port so you can run both scripts if needed
 
 echo "Compiling server and client..."
-gcc -Wall -Wextra -pthread -o server server_v2.c
-gcc -Wall -Wextra -o client client_v2.c
+gcc -Wall -Wextra -pthread -o server server.c
+gcc -Wall -Wextra -o client client.c
 
 echo
 echo "========== CLIENT NEGATIVE TESTS =========="
