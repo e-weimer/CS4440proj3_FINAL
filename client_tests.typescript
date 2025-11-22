@@ -1,0 +1,60 @@
+Script started on 2025-11-22 02:21:36+00:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="125" LINES="34"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit                             # end the recording[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C./test_client.sh                 # <-- run the test script THIS time[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K
+[?2004lCompiling server and client...
+
+========== CLIENT NEGATIVE TESTS ==========
+
+1) Missing args (should print usage and exit non-zero):
+Usage: ./client <host> <port> <string...>
+-- OK: client failed as expected
+
+2) Too few args (host + port only):
+Usage: ./client <host> <port> <string...>
+-- OK: client failed as expected
+
+3) Invalid port 0:
+Invalid port
+-- OK: client rejected invalid port
+
+4) No server listening (connect should fail gracefully):
+connect: Connection refused
+-- OK: client handled connect failure
+
+========== CLIENT NORMAL TESTS (WITH SERVER) ==========
+Starting server on port 5556 in background...
+Server listening on port 5556
+
+5) Simple string round-trip:
+Accepted connection from 127.0.0.1:53442 (fd=4)
+Thread 281473064235296 started for client fd=4
+gfedcba
+
+6) String with spaces:
+Accepted connection from 127.0.0.1:44776 (fd=5)
+Thread 281473064235296 started for client fd=5
+metsys tsacdaorb ycnegreme eht fo tset a si siht
+
+7) Multiple quick successive calls:
+Accepted connection from 127.0.0.1:44784 (fd=4)
+Thread 281473064235296 started for client fd=4
+1# llac tneilc kciuq
+Accepted connection from 127.0.0.1:44798 (fd=5)
+Thread 281473064235296 started for client fd=5
+2# llac tneilc kciuq
+Accepted connection from 127.0.0.1:44812 (fd=4)
+Thread 281473064235296 started for client fd=4
+3# llac tneilc kciuq
+Accepted connection from 127.0.0.1:44826 (fd=5)
+Thread 281473064235296 started for client fd=5
+4# llac tneilc kciuq
+Accepted connection from 127.0.0.1:59784 (fd=4)
+Thread 281473064235296 started for client fd=4
+5# llac tneilc kciuq
+
+Stopping server (SIGTERM)...
+
+========== CLIENT TESTS COMPLETE ==========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 02:22:04+00:00 [COMMAND_EXIT_CODE="0"]
