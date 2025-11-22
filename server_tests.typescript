@@ -1,0 +1,48 @@
+Script started on 2025-11-22 03:04:24+00:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="125" LINES="34"]
+./test_server.sh
+exit
+^[[201~[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ ./test_server.sh
+[?2004lCompiling server and client...
+
+========== SERVER NEGATIVE TESTS ==========
+
+1) Missing port argument (should print usage and exit non-zero):
+Usage: ./server <port>
+-- OK: server failed as expected
+
+2) Invalid port 0 (should print error and exit non-zero):
+Invalid port
+-- OK: server rejected invalid port
+
+3) Invalid port -1 (should print error and exit non-zero):
+Invalid port
+-- OK: server rejected invalid port
+
+========== SERVER NORMAL / CONCURRENCY TESTS ==========
+
+Starting server on port 5555 in background...
+bind: Address already in use
+
+4) Single normal client request:
+dlrow olleh
+
+5) Long input line (buffer boundary / robustness):
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx ...
+
+6) Multiple concurrent clients (demonstrate multi-threading & DoS behavior):
+tneilc tnerrucnoc morf 2 egassem
+tneilc tnerrucnoc morf 3 egassem
+tneilc tnerrucnoc morf 1 egassem
+tneilc tnerrucnoc morf 8 egassem
+tneilc tnerrucnoc morf 4 egassem
+tneilc tnerrucnoc morf 6 egassem
+tneilc tnerrucnoc morf 7 egassem
+tneilc tnerrucnoc morf 5 egassem
+
+Stopping server (SIGTERM)...
+
+========== SERVER TESTS COMPLETE ==========
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 03:04:31+00:00 [COMMAND_EXIT_CODE="0"]
