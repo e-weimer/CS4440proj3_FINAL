@@ -1,10 +1,6 @@
-/*
- * Simple TCP client for the reverse-string server.
- *
- * - Connects to a given host and port.
- * - Sends the command-line string arguments as a single line.
- * - Receives the reversed line from the server and prints it.
- */
+/* This program implements a TCP client that connects to a specified host and port.
+ It sends a string to the server, receives the reversed string, and prints it.
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
