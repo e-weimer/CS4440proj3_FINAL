@@ -59,7 +59,7 @@ static void *thread_main(void *arg) {
     char buf[BUF_SIZE];
     ssize_t r = recv(fd, buf, sizeof(buf) - 1, 0);
     if (r <= 0) {
-        // If r == 0 the client closed the connection; if r < 0 an error occurred.
+        // If r == 0 the client closed the connection; if r < 0 an error occurred
         if (r < 0) {
             perror("recv");
         }
@@ -87,7 +87,7 @@ static void *thread_main(void *arg) {
     while (sent < tosend) {
         ssize_t s = send(fd, buf + sent, tosend - sent, 0);
         if (s <= 0) {
-            // If send fails, log the error (if any) and break out of the loop.
+            // if send fails, log the error (if any) and break out of the loop
             if (s < 0) {
                 perror("send");
             }
@@ -96,7 +96,6 @@ static void *thread_main(void *arg) {
         sent += s;
     }
 
-    // we're done with this client
     close(fd);
     return NULL;
 }
@@ -151,7 +150,7 @@ int main(int argc, char **argv) {
     while (1) {
         client_arg_t *ca = malloc(sizeof(*ca));
         if (!ca) {
-            // if malloc fails, this is serious; close and bail out
+            // if malloc fails, close and bail out
             fatal("malloc");
         }
 
@@ -172,7 +171,7 @@ int main(int argc, char **argv) {
 
         pthread_t tid;
         if (pthread_create(&tid, NULL, thread_main, ca) != 0) {
-            // if we fail to create a thread for this client,
+            // if fails to create a thread for this client,
             // close its socket and free the argument struct
             perror("pthread_create");
             close(ca->client_fd);
@@ -184,7 +183,6 @@ int main(int argc, char **argv) {
         pthread_detach(tid);
     }
 
-    // normally unreachable, but here for completeness
     close(srv);
     return 0;
 }
