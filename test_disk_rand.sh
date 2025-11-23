@@ -11,8 +11,8 @@ TRACK_US=750
 BACKING_FILE="disk_rand.img"
 
 echo "Compiling disk_server and disk_rand..."
-$CC $CFLAGS -o disk_server disk_server_v2.c
-$CC $CFLAGS -o disk_rand   disk_rand_v2.c
+$CC $CFLAGS -o disk_server disk_server.c
+$CC $CFLAGS -o disk_rand   disk_rand.c
 
 echo
 echo "=========== DISK RAND NEGATIVE TESTS ==========="
