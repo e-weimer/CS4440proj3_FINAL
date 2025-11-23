@@ -1,0 +1,41 @@
+Script started on 2025-11-23 01:59:56+00:00 [TERM="xterm-256color" TTY="/dev/pts/6" COLUMNS="80" LINES="28"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_fs_dirs.sh
+[?2004l=========== FS_DIRS TESTS BEGIN ===========
+
+1) Starting disk_server on port 5600 ...
+[disk_server] port=5600 geom=32x32 track=1000us file=fs_dirs_test_disk.img
+2) Starting fs_server on port 5601 ...
+[fs_server] listening on 5601; disk=127.0.0.1:5600
+
+3) Format filesystem using fs_cli (F):
+0
+
+4) Basic mkdir / cd / pwd sequence:
+Connected to fs_server at 127.0.0.1:5601
+Type 'help' for a list of commands.
+fs:/$ /
+fs:/$ fs:/$ fs:/foo$ /foo
+fs:/foo$ mkdir: unexpected response: 
+fs:/foo$ fs:/foo/bar$ /foo/bar
+fs:/foo/bar$ fs:/$ /
+fs:/$ 
+5) mkdir existing directory (expect error on second mkdir foo):
+Connected to fs_server at 127.0.0.1:5601
+Type 'help' for a list of commands.
+fs:/$ mkdir: unexpected response: fs:/$ mkdir: unexpected response: fs:/$ 
+6) rmdir non-empty directory (expect 'not empty' error):
+connect: Connection refused
+
+7) Remove nested directory, then parent (expect both rmdir to succeed):
+connect: Connection refused
+
+8) cd into non-existent directory (expect error):
+connect: Connection refused
+
+=========== FS_DIRS TESTS COMPLETE ==========
+
+Cleaning up...
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-23 02:00:19+00:00 [COMMAND_EXIT_CODE="0"]
