@@ -1,7 +1,6 @@
-// problem4/fs_server.c
-// Filesystem server for Project 3 (Problem 4).
+// Filesystem server (Problem 4).
 // Speaks the FS protocol to clients and uses the disk server protocol underneath.
-// FS protocol per handout: F, C f, D f, L b, R f, W f l data.  (flat directory) [spec].
+// FS protocol per handout: F, C f, D f, L b, R f, W f l data.  (flat directory).
 //
 // Build/run example:
 //   ./fs_server <listen_port> <disk_host> <disk_port>
@@ -18,11 +17,10 @@
 //  - Directory entry: fixed 64 bytes (name[32], length[4], first[4], used[1], pad[23]); two per sector.
 //  - "F" formats the disk (writes metadata tables). Other ops require a formatted disk.
 //
-// Spec refs: FS server commands & responses; flat filesystem design with FAT & directory table. [PDF]
+// Spec refs: FS server commands & responses; flat filesystem design with FAT & directory table. 
 //   - Commands list & return codes. (F, C, D, L, R, W). 
-//   - Suggested FAT + directory approach in Appendix.
 //
-// (c) CS4440 Project 3
+
 #define _GNU_SOURCE
 #include <arpa/inet.h>
 #include <errno.h>
@@ -41,8 +39,8 @@
 #define MAX_LINE 4096
 #define MAX_NAME 32
 
-// === Disk protocol helpers ===
-// We open a *separate* disk connection per client thread for simplicity.
+// === disk protocol helpers ===
+// open a *separate* disk connection per client thread for simplicity
 typedef struct {
     int fd;
     long cyl, sec;
@@ -87,7 +85,7 @@ static inline void idx_to_cs(const disk_t* d, uint32_t idx, long* c, long* s) {
     *c = idx / (uint32_t)d->sec; *s = idx % (uint32_t)d->sec;
 }
 
-// Read sector by absolute index
+// read sector by absolute index
 static int disk_read_idx(disk_t* d, uint32_t idx, unsigned char out[BLKSZ]) {
     long c, s; idx_to_cs(d, idx, &c, &s);
     char hdr[64]; int m = snprintf(hdr, sizeof(hdr), "R %ld %ld\n", c, s);
@@ -96,7 +94,7 @@ static int disk_read_idx(disk_t* d, uint32_t idx, unsigned char out[BLKSZ]) {
     if (code != '1') return -1;
     return (read_exact(d->fd, out, BLKSZ) == BLKSZ) ? 0 : -1;
 }
-// Write sector by absolute index. We always write 128 bytes.
+// write sector by absolute index, always write 128 bytes
 static int disk_write_idx(disk_t* d, uint32_t idx, const unsigned char in[BLKSZ]) {
     long c, s; idx_to_cs(d, idx, &c, &s);
     char hdr[64]; int m = snprintf(hdr, sizeof(hdr), "W %ld %ld %d\n", c, s, BLKSZ);
@@ -105,7 +103,7 @@ static int disk_write_idx(disk_t* d, uint32_t idx, const unsigned char in[BLKSZ]
     char code; return (read_exact(d->fd, &code, 1) == 1 && code == '1') ? 0 : -1;
 }
 
-// === On-disk layout ===
+// === on-disk layout ===
 static const uint32_t FAT_FREE = 0x00000000u;
 static const uint32_t FAT_EOF = 0xffffffffu;
 static const uint32_t FAT_RESERVED = 0xfffffffEu;
@@ -120,7 +118,7 @@ typedef struct {
     uint32_t dir_entries;  // total directory entries
 } layout_t;
 
-// directory entry (64 bytes) — manual packing to avoid padding
+// directory entry (64 bytes) â€” manual packing to avoid padding
 typedef struct {
     char     name[MAX_NAME]; // 32
     uint32_t length;         // bytes
@@ -172,7 +170,7 @@ static int super_load(const unsigned char* blk, disk_t* d, layout_t* L) {
 }
 
 // === FAT cache ===
-// We'll load/save the whole FAT into memory (uint32_t per block).
+// load/save the whole FAT into memory (uint32_t per block)
 typedef struct {
     uint32_t* v;   // size = total_blocks
     bool loaded;
@@ -219,7 +217,7 @@ static int fat_flush(disk_t* d, const layout_t* L, fat_cache_t* fc) {
 static uint32_t fat_get(fat_cache_t* fc, uint32_t i) { return fc->v[i]; }
 static void     fat_set(fat_cache_t* fc, uint32_t i, uint32_t v) { fc->v[i] = v; }
 
-// === Directory helpers ===
+// === directory helpers ===
 static int dir_read_entry(disk_t* d, const layout_t* L, uint32_t slot, dirent_fs* out) {
     uint32_t per_sector = BLKSZ / 64; // 2
     uint32_t sec = L->dir_start + (slot / per_sector);
@@ -253,7 +251,7 @@ static int dir_find_free(disk_t* d, const layout_t* L, uint32_t* slot) {
     return 1; // none
 }
 
-// === Allocation ===
+// === allocation ===
 static int find_free_block(const layout_t* L, fat_cache_t* fc, uint32_t start_idx, uint32_t* out) {
     for (uint32_t i = start_idx; i < L->total_blocks; i++) {
         if (fc->v[i] == FAT_FREE) { *out = i; return 0; }
@@ -272,7 +270,7 @@ static int free_chain(disk_t* d, const layout_t* L, fat_cache_t* fc, uint32_t he
     return 0;
 }
 
-// === Formatting ===
+// === formatting ===
 static int compute_layout(const disk_t* disk, layout_t* L) {
     L->total_blocks = total_blocks(disk);
     // FAT: 4 bytes per entry. entries_per_sector = 128/4 = 32
@@ -317,7 +315,7 @@ static int format_fs(disk_t* d, layout_t* L, fat_cache_t* fc) {
     return 0;
 }
 
-// === Reading/Writing files ===
+// === reading/writing files ===
 static int read_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, const dirent_fs* ent, unsigned char** out, uint32_t* outlen) {
     *outlen = ent->length;
     *out = (unsigned char*)malloc(ent->length ? ent->length : 1);
@@ -336,7 +334,7 @@ static int read_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, const 
 }
 
 static int write_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, dirent_fs* ent, const unsigned char* data, uint32_t len) {
-    // Free current chain if any
+    // free current chain if any
     if (ent->used && ent->first != FAT_EOF) {
         if (free_chain(d, L, fc, ent->first) < 0) return -1;
     }
@@ -345,7 +343,7 @@ static int write_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, diren
 
     if (len == 0) { return 0; }
 
-    // Allocate needed blocks
+    // allocate needed blocks
     uint32_t blocks = (len + BLKSZ - 1) / BLKSZ;
     uint32_t data_start = L->dir_start + L->dir_sectors; // first usable data block
     uint32_t head = FAT_EOF, prev = FAT_EOF;
@@ -359,7 +357,7 @@ static int write_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, diren
         prev = b;
     }
 
-    // Write blocks
+    // write blocks
     ent->first = head;
     uint32_t cur = head;
     uint32_t left = len, pos = 0;
@@ -376,7 +374,7 @@ static int write_whole_file(disk_t* d, const layout_t* L, fat_cache_t* fc, diren
     return 0;
 }
 
-// === Server state per process ===
+// === server state per process ===
 typedef struct {
     char disk_host[64];
     int  disk_port;
@@ -390,7 +388,7 @@ static server_state_t G;
 
 typedef struct { int cfd; } client_arg_t;
 
-// Utility: load superblock if present
+// utility: load superblock if present
 static int try_load_super(disk_t* d, layout_t* L) {
     unsigned char blk[BLKSZ];
     if (disk_read_idx(d, 0, blk) < 0) return -1;
@@ -499,7 +497,7 @@ static int cmd_write(disk_t* disk, const char* name, uint32_t len, int cfd) {
     return 0;
 }
 
-// === Client handler ===
+// === client handler ===
 static void* client_main(void* vp) {
     int cfd = ((client_arg_t*)vp)->cfd; free(vp);
     // open a dedicated disk connection for this client
@@ -538,7 +536,7 @@ out:
     disk_close(&d); close(cfd); return NULL;
 }
 
-// === Main: listen for FS clients ===
+// === main: listen for FS clients ===
 int main(int argc, char** argv) {
     if (argc != 4) {
         fprintf(stderr, "Usage: %s <listen_port> <disk_host> <disk_port>\n", argv[0]);
