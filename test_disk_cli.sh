@@ -11,8 +11,8 @@ TRACK_US=500
 BACKING_FILE="disk_cli.img"
 
 echo "Compiling disk_server and disk_cli..."
-$CC $CFLAGS -o disk_server disk_server_v2.c
-$CC $CFLAGS -o disk_cli    disk_cli_v2.c
+$CC $CFLAGS -o disk_server disk_server.c
+$CC $CFLAGS -o disk_cli    disk_cli.c
 
 echo
 echo "=========== DISK CLI NEGATIVE TESTS ==========="
