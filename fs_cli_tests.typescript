@@ -1,0 +1,73 @@
+Script started on 2025-11-22 23:51:47+00:00 [TERM="xterm-256color" TTY="/dev/pts/4" COLUMNS="80" LINES="26"]
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit./test_fs_server.shexit[K./test_fs_cli.sh
+[?2004lCompiling disk_server, fs_server, and fs_cli...
+[01m[Kfs_server.c:[m[K In function ‘[01m[Kread_exact[m[K’:
+[01m[Kfs_server.c:61:9:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kif[m[K’ clause does not guard... [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmisleading-indentation-Wmisleading-indentation]8;;[m[K]
+   61 |         [01;35m[Kif[m[K (r == 0) return off; if (r < 0) { if (errno == EINTR) continue; return -1; } off += (size_t)r;
+      |         [01;35m[K^~[m[K
+[01m[Kfs_server.c:61:33:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kif[m[K’
+   61 |         if (r == 0) return off; [01;36m[Kif[m[K (r < 0) { if (errno == EINTR) continue; return -1; } off += (size_t)r;
+      |                                 [01;36m[K^~[m[K
+[01m[Kfs_server.c:[m[K In function ‘[01m[Kreadline[m[K’:
+[01m[Kfs_server.c:67:9:[m[K [01;35m[Kwarning: [m[Kthis ‘[01m[Kif[m[K’ clause does not guard... [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wmisleading-indentation-Wmisleading-indentation]8;;[m[K]
+   67 |         [01;35m[Kif[m[K (r == 0) break; if (r < 0) { if (errno == EINTR) continue; return -1; } out[off++] = c; if (c == '\n') break;
+      |         [01;35m[K^~[m[K
+[01m[Kfs_server.c:67:28:[m[K [01;36m[Knote: [m[K...this statement, but the latter is misleadingly indented as if it were guarded by the ‘[01m[Kif[m[K’
+   67 |         if (r == 0) break; [01;36m[Kif[m[K (r < 0) { if (errno == EINTR) continue; return -1; } out[off++] = c; if (c == '\n') break;
+      |                            [01;36m[K^~[m[K
+[01m[Kfs_server.c:[m[K In function ‘[01m[Kread_whole_file[m[K’:
+[01m[Kfs_server.c:321:55:[m[K [01;35m[Kwarning: [m[Kunused parameter ‘[01m[KL[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-parameter-Wunused-parameter]8;;[m[K]
+  321 | static int read_whole_file(disk_t* d, [01;35m[Kconst layout_t* L[m[K, fat_cache_t* fc, const dirent_fs* ent, unsigned char** out, uint32_t* outlen) {
+      |                                       [01;35m[K~~~~~~~~~~~~~~~~^[m[K
+[01m[Kfs_server.c:[m[K In function ‘[01m[Kclient_main[m[K’:
+[01m[Kfs_server.c:566:57:[m[K [01;35m[Kwarning: [m[Kunused variable ‘[01m[Karg2[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+  566 |         char cmd = 0; char arg1[MAX_LINE] = { 0 }; char [01;35m[Karg2[m[K[MAX_LINE] = { 0 };
+      |                                                         [01;35m[K^~~~[m[K
+At top level:
+[01m[Kfs_server.c:321:12:[m[K [01;35m[Kwarning: [m[K‘[01m[Kread_whole_file[m[K’ defined but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-function-Wunused-function]8;;[m[K]
+  321 | static int [01;35m[Kread_whole_file[m[K(disk_t* d, const layout_t* L, fat_cache_t* fc, const dirent_fs* ent, unsigned char** out, uint32_t* outlen) {
+      |            [01;35m[K^~~~~~~~~~~~~~~[m[K
+
+=========== FS CLI NEGATIVE TESTS ===========
+
+1) Missing arguments (should print usage and exit non-zero):
+Usage: ./fs_cli <host> <port>
+-- OK: fs_cli failed as expected (missing args)
+
+2) Invalid port (0) (should print error and exit non-zero):
+Invalid port: 0
+-- OK: fs_cli rejected port 0
+
+3) Connection failure (no fs_server running):
+connect: Connection refused
+-- OK: fs_cli handled connect() failure
+
+=========== STARTING DISK + FS SERVER ==========
+
+4) Start disk_server in background...
+bind: Address already in use
+
+5) Start fs_server in background...
+[fs_server] listening on 5611; disk=127.0.0.1:5610
+
+=========== FS CLI FUNCTIONAL TESTS ==========
+
+6) Basic format + create + list:
+0
+0
+0
+alpha
+beta
+
+7) Write and read a small file (check R formatting):
+0
+0 18 Hello, filesystem!
+
+8) Read a non-existent file (R gamma) – expect code 1:
+
+9) Overwrite a file with different length (shorter) and read again:
+connect: Connection refused
+[?2004h]0;seed@seedvm2004: ~/Downloads/edited[01;32mseed@seedvm2004[00m:[01;34m~/Downloads/edited[00m$ exit
+[?2004lexit
+
+Script done on 2025-11-22 23:52:31+00:00 [COMMAND_EXIT_CODE="1"]
