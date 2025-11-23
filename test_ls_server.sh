@@ -5,7 +5,7 @@ PORT=5560
 
 echo "Compiling ls_server and ls_client..."
 gcc -Wall -Wextra -o ls_server ls_server.c
-gcc -Wall -Wextra -o ls_client ls_client_v2.c
+gcc -Wall -Wextra -o ls_client ls_client.c
 
 echo
 echo "========== LS SERVER NEGATIVE TESTS =========="
