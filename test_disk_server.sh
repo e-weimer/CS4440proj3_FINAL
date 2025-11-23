@@ -11,9 +11,9 @@ TRACK_US=1000
 BACKING_FILE="disk.img"
 
 echo "Compiling disk_server, disk_cli, and disk_rand..."
-$CC $CFLAGS -o disk_server disk_server_v2.c
-$CC $CFLAGS -o disk_cli    disk_cli_v2.c
-$CC $CFLAGS -o disk_rand   disk_rand_v2.c
+$CC $CFLAGS -o disk_server disk_server.c
+$CC $CFLAGS -o disk_cli    disk_cli.c
+$CC $CFLAGS -o disk_rand   disk_rand.c
 
 echo
 echo "=========== DISK SERVER NEGATIVE TESTS ==========="
