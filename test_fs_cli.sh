@@ -11,7 +11,7 @@ DISK_IMG="fs_cli_disk.img"
 echo "Compiling disk_server, fs_server, and fs_cli..."
 $CC $CFLAGS -pthread -o disk_server disk_server.c
 $CC $CFLAGS -o fs_server fs_server.c
-$CC $CFLAGS -o fs_cli    fs_cli_v2.c
+$CC $CFLAGS -o fs_cli    fs_cli.c
 
 echo
 echo "=========== FS CLI NEGATIVE TESTS ==========="
