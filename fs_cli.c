@@ -1,4 +1,6 @@
-// problem4/fs_cli.c
+// problem 4 
+// Filesystem client that sends filesystem commands to fs_server and prints status codes and data.
+
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netinet/in.h>
